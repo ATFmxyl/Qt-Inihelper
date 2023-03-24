@@ -377,6 +377,18 @@ public:
 
 	//// Close the INI file.
 	~QXINI() {}
+	
+	//读取所有节点
+	QStringList ReadSections()
+	{
+		return ::IniHelper::ReadSections(m_filePath);
+	}
+
+	//读取所有键
+	QStringList ReadKeys(const QString& sectionName)
+	{
+		return ::IniHelper::ReadKeys(sectionName,m_filePath);
+	}
 
 	class Section
 	{
