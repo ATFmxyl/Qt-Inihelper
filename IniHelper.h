@@ -367,7 +367,7 @@ public:
 };
 
 //重载操作ini读写
-//可以支持 QXINI int(path); ini[selection][key] = value;的方式写入数据  以及 qt支持的基础数据类型 value = ini[selection][key]; 读取数据
+//可以支持 QXINI int(path); ini[Section][Key] = Value;的方式写入数据  以及 Qt支持的基础数据类型 Value = ini[Section][Key]; 读取数据
 class QXINI
 {
 private:
