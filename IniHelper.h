@@ -1,7 +1,7 @@
 #pragma once
 
 # Author: [ATFmxyl]
-# Date: [2023.03.17]
+# Date: [2023.05.03]
 # Description: [Qt平台操作ini文件的帮助类]
 
 
@@ -424,7 +424,18 @@ public:
 			{
 				return QVariant(IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath)).value<T>();
 			}
-
+			
+			template<typename T>
+			T operator()(const T& defaultValue) const
+			{
+				QVariant value = IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath);
+				if (value.toString().isEmpty())
+				{
+						return defaultValue;
+				}
+				return value.value<T>();
+			}
+			
 			Key& operator=(std::string value)
 			{
 				IniHelper::Write(m_section.m_sectionName, m_keyName, QString::fromStdString(value), m_section.m_filePath);
