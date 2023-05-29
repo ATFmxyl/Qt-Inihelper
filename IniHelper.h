@@ -422,18 +422,26 @@ public:
 			template<typename T>
 			operator T() const
 			{
-				return QVariant(IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath)).value<T>();
+				if constexpr (std::is_same_v<T, int>)
+					return std::stoi(IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath).toStdString());
+				else
+					return QVariant(IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath)).value<T>();
 			}
 			
 			template<typename T>
 			T operator()(const T& defaultValue) const
 			{
-				QVariant value = IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath);
-				if (value.toString().isEmpty())
-				{
-						return defaultValue;
-				}
-				return value.value<T>();
+                QVariant value = IniHelper::Read(m_section.m_sectionName, m_keyName, m_section.m_filePath);
+                if (value.toString().isEmpty())
+                {
+					//写入空键
+					IniHelper::Write(m_section.m_sectionName, m_keyName, QVariant("").toString(), m_section.m_filePath);
+                    return defaultValue;
+                }
+				if constexpr (std::is_same_v<T, int>)
+					return std::stoi(value.toString().toStdString());
+				else
+					return value.value<T>();
 			}
 			
 			Key& operator=(std::string value)
