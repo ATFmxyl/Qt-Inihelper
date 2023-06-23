@@ -1,7 +1,7 @@
 #pragma once
 
 # Author: [ATFmxyl]
-# Date: [2023.05.03]
+# Date: [2023.06.23]
 # Description: [Qt平台操作ini文件的帮助类]
 
 
@@ -147,7 +147,7 @@ public:
 class IniHelper
 {
 private:
-	inline const static int maxsize = 8192;
+	inline const static int maxsize = 10240;
 public:
 
 	//键值对模型
